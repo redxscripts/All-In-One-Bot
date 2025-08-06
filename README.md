@@ -1,17 +1,24 @@
-# BlueStacks Anti-Cheat Protector
+# BlueStacks Advanced Anti-Cheat Protector
 
-A comprehensive anti-cheat protection system for BlueStacks emulators that monitors for memory modifications, DLL injections, file tampering, and suspicious hotkey usage. All security events are automatically logged to Discord via webhook.
+A military-grade anti-cheat protection system for BlueStacks emulators featuring kernel-level monitoring, advanced obfuscation, checksum verification, and system-wide protection. All security events are automatically logged to Discord via webhook with enhanced intelligence.
 
-## Features
+## 🛡️ Advanced Features
 
-- 🔍 **Process Monitoring**: Continuously monitors BlueStacks processes for unauthorized modifications
-- 🛡️ **DLL Injection Detection**: Detects and prevents DLL injections into BlueStacks processes
-- 🧠 **Memory Protection**: Monitors for suspicious memory modifications and changes
-- 📁 **File Integrity**: Watches for unauthorized modifications to BlueStacks executables
-- ⌨️ **Hotkey Detection**: Monitors for common cheat hotkeys (F8, F9)
-- 🚀 **Auto-Start**: Runs as a Windows service that starts automatically with the system
-- 📊 **Discord Logging**: Sends real-time alerts to Discord webhook
-- ⚡ **Multi-threaded**: Efficient monitoring using separate threads for each protection type
+### Core Protection
+- 🔍 **Enhanced Process Monitoring**: Kernel-level process analysis with advanced threat detection
+- 🛡️ **Advanced DLL Injection Detection**: Multi-layer detection with kernel-mode preparation
+- 🧠 **Intelligent Memory Protection**: Pattern analysis and cheat engine signature detection
+- 📁 **Cryptographic File Integrity**: SHA-256 checksum verification for executable tampering
+- ⌨️ **System-Level Hotkey Detection**: Low-level keyboard hooks for F6/F7/F8/F9 monitoring
+- 🚀 **Auto-Start Service**: Windows service with enhanced startup protection
+
+### Advanced Security
+- 🔐 **Anti-Reverse Engineering**: Multiple obfuscation layers and anti-debugging techniques
+- 🎯 **Kernel-Mode Preparation**: Framework for future kernel driver development
+- 🛠️ **Anti-Tampering**: Real-time code integrity verification and self-protection
+- 🔒 **Memory Encryption**: Sensitive data obfuscation and secure memory allocation
+- 📊 **Enhanced Discord Logging**: Detailed threat intelligence and real-time alerts
+- ⚡ **Multi-threaded Architecture**: Six specialized monitoring threads for maximum coverage
 
 ## Monitored BlueStacks Versions
 

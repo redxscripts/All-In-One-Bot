@@ -1,6 +1,6 @@
 @echo off
-echo BlueStacks Protector - Uninstaller
-echo ===================================
+echo BlueStacks Advanced Protector - Uninstaller
+echo ===========================================
 
 REM Check if running as administrator
 net session >nul 2>&1
@@ -14,8 +14,8 @@ if %errorLevel% == 0 (
 )
 
 echo.
-echo Stopping BlueStacks Protector service...
-net stop BlueStacksProtector 2>nul
+echo Stopping BlueStacks Advanced Protector service...
+net stop BlueStacksAdvancedProtector 2>nul
 if %ERRORLEVEL% == 0 (
     echo Service stopped successfully.
 ) else (
@@ -23,8 +23,8 @@ if %ERRORLEVEL% == 0 (
 )
 
 echo.
-echo Uninstalling BlueStacks Protector service...
-"C:\BlueStacksProtector\BlueStacksProtector.exe" --uninstall 2>nul
+echo Uninstalling BlueStacks Advanced Protector service...
+"C:\BlueStacksAdvancedProtector\BlueStacksProtector.exe" --uninstall 2>nul
 if %ERRORLEVEL% == 0 (
     echo Service uninstalled successfully.
 ) else (
@@ -33,13 +33,13 @@ if %ERRORLEVEL% == 0 (
 
 echo.
 echo Removing files...
-if exist "C:\BlueStacksProtector\BlueStacksProtector.exe" (
-    del "C:\BlueStacksProtector\BlueStacksProtector.exe"
+if exist "C:\BlueStacksAdvancedProtector\BlueStacksProtector.exe" (
+    del "C:\BlueStacksAdvancedProtector\BlueStacksProtector.exe"
     echo Executable removed.
 )
 
-if exist "C:\BlueStacksProtector" (
-    rmdir "C:\BlueStacksProtector" 2>nul
+if exist "C:\BlueStacksAdvancedProtector" (
+    rmdir "C:\BlueStacksAdvancedProtector" 2>nul
     if %ERRORLEVEL% == 0 (
         echo Directory removed.
     ) else (
@@ -48,8 +48,9 @@ if exist "C:\BlueStacksProtector" (
 )
 
 echo.
-echo ===================================
-echo BlueStacks Protector has been uninstalled.
-echo All protection services have been stopped.
-echo ===================================
+echo ===========================================
+echo BlueStacks Advanced Protector has been uninstalled.
+echo All advanced protection services have been stopped.
+echo System-level hooks have been removed.
+echo ===========================================
 pause
