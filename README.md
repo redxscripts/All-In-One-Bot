@@ -1,148 +1,202 @@
-<h1 align="center">
-  <br>
-  <a href="https://github.com/friday2su"><img src="https://wallpaperaccess.com/full/765574.jpg" height="200" alt="Discord.js v14 Bot"></a>
-  <br>
-  Discord.js v14 Bot
-  <br>
-</h1>
+# BlueStacks Anti-Cheat Protector
 
-<p align="center">Admin, AutoMod, Anime, Economy, Fun, Giveaway, Image, Invite, Information, Moderation, Music, Owner, Social, Statistics, Suggestion, Ticket, Utility and More...</p>
+A comprehensive anti-cheat protection system for BlueStacks emulators that monitors for memory modifications, DLL injections, file tampering, and suspicious hotkey usage. All security events are automatically logged to Discord via webhook.
 
-<br>
+## Features
 
-<p align="center">
-  <a href="#-prerequisites">Prerequisites</a>
-  •
-  <a href="#-getting-started">Getting Started</a>
-  •
-  <a href="#-features">Features</a>
-  •
-  <a href="#-contributing">Contributing</a>
-</p>
+- 🔍 **Process Monitoring**: Continuously monitors BlueStacks processes for unauthorized modifications
+- 🛡️ **DLL Injection Detection**: Detects and prevents DLL injections into BlueStacks processes
+- 🧠 **Memory Protection**: Monitors for suspicious memory modifications and changes
+- 📁 **File Integrity**: Watches for unauthorized modifications to BlueStacks executables
+- ⌨️ **Hotkey Detection**: Monitors for common cheat hotkeys (F8, F9)
+- 🚀 **Auto-Start**: Runs as a Windows service that starts automatically with the system
+- 📊 **Discord Logging**: Sends real-time alerts to Discord webhook
+- ⚡ **Multi-threaded**: Efficient monitoring using separate threads for each protection type
 
-<br>
+## Monitored BlueStacks Versions
 
-## 📦 Prerequisites
+- BlueStacks 5 (HD-Player.exe): `C:\Program Files\BlueStacks_nxt\HD-Player.exe`
+- BlueStacks MSI: `C:\Program Files\BlueStacks_msi5\HD-Player.exe`
 
-- [Node.js](https://nodejs.org/en/) v16.11.0 or higher
-- [Git](https://git-scm.com/downloads)
-- [MongoDB](https://www.mongodb.com)
+## Requirements
 
-## 🚀 Getting Started
+- Windows 10/11
+- Visual Studio 2019 or later (with C++ development tools)
+- CMake 3.10 or later
+- Administrator privileges for installation
 
-- Open the terminal and run the following commands
+## Installation
+
+### Method 1: Automated Installation (Recommended)
+
+1. **Download/Clone** this repository to your Windows machine
+2. **Right-click** on `build_and_install.bat` and select **"Run as administrator"**
+3. The script will automatically:
+   - Build the project
+   - Install the service
+   - Start protection immediately
+
+### Method 2: Manual Installation
+
+1. **Build the project:**
+   ```cmd
+   mkdir build
+   cd build
+   cmake .. -G "Visual Studio 16 2019" -A x64
+   cmake --build . --config Release
+   ```
+
+2. **Install as Windows service:**
+   ```cmd
+   BlueStacksProtector.exe --install
+   ```
+
+3. **Start the service:**
+   ```cmd
+   net start BlueStacksProtector
+   ```
+
+## Usage Commands
+
+```cmd
+# Install as Windows service
+BlueStacksProtector.exe --install
+
+# Uninstall the service
+BlueStacksProtector.exe --uninstall
+
+# Run in console mode (for testing)
+BlueStacksProtector.exe --console
+
+# Check service status
+sc query BlueStacksProtector
+```
+
+## Discord Webhook Configuration
+
+The tool is pre-configured with your Discord webhook URL. All security events will be sent to:
+`https://discord.com/api/webhooks/1402522536138248263/ntSzOgKpG9KGHjd1ScMSK61yv87QH1CjR9eajEPsPDOmTvOOJYGyAUzcUEn1LMWQ1oLd`
+
+### Alert Types
+
+1. **🔒 Service Started/Stopped**: When protection starts or stops
+2. **⚠️ DLL Injection Alert**: When unauthorized DLLs are injected
+3. **⚠️ Memory Modification Alert**: When suspicious memory changes are detected
+4. **⚠️ File Modification Alert**: When BlueStacks executables are tampered with
+5. **⚠️ Suspicious Hotkey Alert**: When F8/F9 keys are pressed (common cheat hotkeys)
+
+## How It Works
+
+### DLL Injection Protection
+- Continuously scans running BlueStacks processes for loaded modules
+- Detects when new DLLs are injected into the process
+- Immediately terminates the process if unauthorized injection is detected
+
+### Memory Modification Detection
+- Monitors process memory usage patterns
+- Triggers alerts on significant memory changes (>50MB threshold)
+- Helps detect memory-based cheats like those from Cheat Engine
+
+### File Integrity Monitoring
+- Watches BlueStacks executable files for unauthorized modifications
+- Detects if someone replaces the original executable with a modified version
+
+### Hotkey Monitoring
+- Monitors for F8 and F9 key presses (commonly used for cheat activation)
+- Logs suspicious hotkey usage for investigation
+
+## Protection Actions
+
+When a threat is detected, the protector will:
+1. **Log the incident** to Discord with detailed information
+2. **Terminate the affected process** to prevent cheating
+3. **Continue monitoring** for new instances
+
+## Service Management
+
+### Start/Stop Service
+```cmd
+# Start
+net start BlueStacksProtector
+
+# Stop
+net stop BlueStacksProtector
+
+# Restart
+net stop BlueStacksProtector && net start BlueStacksProtector
+```
+
+### Check Service Status
+```cmd
+sc query BlueStacksProtector
+```
+
+### View Service Configuration
+```cmd
+sc qc BlueStacksProtector
+```
+
+## Troubleshooting
+
+### Service Won't Start
+1. Ensure you're running as Administrator
+2. Check Windows Event Viewer for error details
+3. Try running in console mode first: `BlueStacksProtector.exe --console`
+
+### No Discord Messages
+1. Verify your Discord webhook URL is correct
+2. Check your internet connection
+3. Ensure Windows Firewall isn't blocking the application
+
+### BlueStacks Not Detected
+1. Verify BlueStacks is installed in the standard locations
+2. Check if you're using a different BlueStacks version
+3. Modify the `targetPaths` in the source code if needed
+
+## File Structure
 
 ```
-git clone https://github.com/friday2su/discord-js-bot.git
-cd discord-js-bot
-npm install
+BlueStacksProtector/
+├── BlueStacksProtector.cpp    # Main source code
+├── CMakeLists.txt            # Build configuration
+├── build_and_install.bat     # Automated installer
+└── README.md                 # This file
 ```
 
-- Wait for all the dependencies to be installed
-- Rename `.env.example` to `.env` and fill the values
-- Optionally edit `config.js`
-- Type `npm run start` to start the bot
+## Technical Details
 
-If you need any additional help, make sure to read our guides [here](docs/additional/installation.md)
+- **Language**: C++17
+- **Platform**: Windows 10/11
+- **Architecture**: x64
+- **Service Type**: Windows Service (Auto-start)
+- **Dependencies**: WinHTTP, PSAPI, AdvAPI32
 
-<br>
+## Security Features
 
-<h1 align="center"> ✨ Features ✨ </h1>
+- Runs with minimal required privileges
+- Uses Windows APIs for secure process monitoring
+- Encrypted HTTPS communication to Discord
+- Thread-safe implementation
+- Graceful error handling and recovery
 
-### 📡 **Advanced Dashboard**
+## Limitations
 
-- Manage your servers and make your server-specific settings!
-- Make custom adjustments easy!
+- Requires Administrator privileges for installation
+- Only monitors specified BlueStacks versions
+- May produce false positives with legitimate software
+- Dependent on Windows API availability
 
-### 🛑 **Powerful Moderation:**
+## Support
 
-- **Moderation Commands.** <br /> _Commands:_ `ban`, `unban`, `timeout`, `voice moderation`, `deafen`, `move`, `warn`, `setnick`, ...
-- **Multi-Function Purge Commands.** <br /> _Commands:_ `purge`, `purge attach`, `purge bots`, `purge links`, `purge token`, `purge user`, ...
+For issues or questions:
+1. Check the Discord webhook for real-time logs
+2. Run in console mode to see debug output
+3. Check Windows Event Viewer for system errors
 
-### 🤖 **Auto Moderation:**
+## License
 
-- **Anti system** <br /> _Commands:_ `anti ghostping`, `anti spam`, `anti massmention`, ...
-- **Auto Delete system** <br /> _Commands:_ `autodelete attachments`, `autodelete invites`, `autodelete links`, `autodelete maxlines`, ...
-- **AutoMod system** <br /> _Commands:_ `automod status`, `automod strikes`, `automod action`, `automod debug`, `automod whitelist`, ...
+This software is provided as-is for educational and security purposes.
 
-### ⚙️ **Admin Configuration:**
+---
 
-- **Let a bot be the server's assistant!** <br /> _Commands:_ `autorole`, `farewell`, `welcome`, `counters`, `flag translation`, `reaction roles`, ...
-- **Make custom settings for your own server.** <br /> _Commands:_ `setprefix`, `maxwarns`, `modlog`...
-
-### 💁 **Information Gathering:**
-
-- **User Context Interactions**
-- **Advanced Information** Get deep information about a user, channel, role, etc.
-
-### 🎵 **Music:**
-
-- **LossLess Music!** Enjoy high quality lossless music
-- **Multi-Platform** Play music from YouTube, SoundCloud, Spotify, and more
-- **Filters** Apply filters to your music and spice it up
-
-### 🎉 **Giveaways:**
-
-- **Easy to use** Create giveaways with ease
-- **Role specific** giveaways
-- **Customizable** Customize the giveaway to your liking
-- **Limitless** Create unlimited giveaways
-
-### 🫂 **Social Content:**
-
-- **You Have A CV In Each Server-Specific Bot!** <br /> _Commands:_ `rep`, `rep view`...
-- **Do You Love Someone?** <br /> _Commands:_ `rep give`...
-
-### 🎟 **Ticket System:**
-
-- **Make Supporting Members A Breeze With Tickets!** <br/> Highly customizable ticket system with staff roles
-- **Multiple Categories** <br/> Don't Want The Tickets To Be Everywhere? Categorize them using select menus
-
-### 📉 **Stats Tracking:**
-
-- **Levelling** Track your server's activity with a level system
-- **Leaderboards** See who is the most active user in your server
-- **Customizable System** Configure the levelup message, rank cards to your liking
-
-### 🙋‍♂️ **Suggestions:**
-
-- **Get Suggestions From Server Members To Help Your Server Become The Best!** <br /> _Commands:_ `suggest`, `suggestion`...
-- **Accept Or Decline The Suggestions And Customize Them To The Max!** <br /> _Commands:_ `suggestion status`, `suggestion channel`, `suggestion appch`, `suggestion rejch`, `suggestion approve`, `suggestion staffadd`, `suggestion staffremove`...
-
-### ⚒️ **Utility Commands:**
-
-- **Need Some Help With Something? Use The Utility Commands To Find Out The Answer To It** <br /> _Commands:_ `bigemoji`, `covid`, `pokedex`, `urban`, `weather`, ...
-- **Need Help With Some More Stuff?** <br /> _Commands:_ `help`, `proxies`, `translate`, `paste`, ...
-
-### ⭐ **Anime Content:**
-
-- **Love Anime? Express You Love To Someone Using The React Commands** <br /> _Commands:_ `react`, `hug`, `kiss`, `cuddle`, `pat`, `poke`, `slap`, `smug`, ...
-
-### 🪙 **Economy System:**
-
-- **Want To Become Richest? Use The Economy Commands!** <br /> _Commands:_ `bank`, `daily`, `beg`, `gamble`...
-- **Give People Money, Check Your Balance, Or Just Flex!** <br /> _Commands:_ `bank balance`, `bank deposit`, `bank withdraw`, `bank transfer`, ...
-
-### 😁 **Fun Commands:**
-
-- **Have Some Fun In Your Server!** <br /> _Commands:_ `animal`, `facts`, `meme`, `flip`, ...
-- **Play Games And Enjoy Yourself** <br /> _Commands:_ `snake`, `together`, `flip coin`, `flip text`, ...
-
-### 📨 **Invite Tracking:**
-
-- **Track who has been inviting people to your server!**
-- **Invite Ranks!** Inviter can get awesome rewards and be recognised
-- **Configure these settings and customize them to your liking!** <br /> _Commands:_ `resetinvites`, `addinvites`, `invitesimport`, `inviterank`...
-
-### 📷 **Image Manipulation:**
-
-- **Customize other peoples avatars** <br /> _Commands:_ `blur`, `greyscale`, `invert`, `pixelate`, `blur`, `sepia`, `sharpen`, `ad`, `affect`, `beautiful`, `color`...
-- **Make some images by yourself or make some art** <br /> _Commands:_ `bobross`, `confusedstonk`, `delete`, `facepalm`, ` hitler`, `jail`, `jokeoverhead`, `karaba`, `mms`, `notstonk`, `poutine`, `rainbow`, `rip`, ` shit`, `stonk`, `tatoo`, `thomas`, `trash`, `wanted`, `wasted`, ...
-
-<br>
-
-<h1 align="center"> 🤝 Contributing 🤝 </h1>
-
-- Special thanks to [@saiteja-madha](https://github.com/saiteja-madha/) the owner of this code.
-- Feel free to [Fork](https://github.com/friday2su/All-In-One-Bot/fork) this repository, create a feature branch and submit a pull request
-- You can keep track of all the planned features [here](https://github.com/friday2su/All-In-One-Bot/projects) or make a request for one at our discord
+**⚠️ Important**: This tool is designed to protect against cheating in games. Use responsibly and in accordance with your local laws and game terms of service.
